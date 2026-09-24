@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Word engine demo</title>
+    <script>
+      (async function () {
+        var path = location.pathname;
+        var cut = path.indexOf('/app/');
+        var rootPath = cut === -1 ? path.replace(/[^/]*$/, '') : path.slice(0, cut + 1);
+        var root = location.origin + rootPath;
+        var marker = 'word-engine-demo-refresh';
+        try {
+          if (navigator.serviceWorker && sessionStorage.getItem(marker) !== '1') {
+            await navigator.serviceWorker.register(root + 'sw.js');
+            await navigator.serviceWorker.ready;
+            var cache = await caches.open('word-engine-demo');
+            var keys = await cache.keys();
+            if (keys.length > 0) {
+              sessionStorage.setItem(marker, '1');
+              if (!navigator.serviceWorker.controller) {
+                await new Promise(function (resolve) {
+                  navigator.serviceWorker.addEventListener('controllerchange', resolve, { once: true });
+                });
+              }
+              location.reload();
+              return;
+            }
+          }
+        } catch (err) {}
+        sessionStorage.removeItem(marker);
+        location.replace(root + location.search);
+      })();
+    </script>
+  </head>
+  <body>Decrypting…</body>
+</html>
