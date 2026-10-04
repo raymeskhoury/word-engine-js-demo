@@ -1,0 +1,6 @@
+This data contains semantic vectors from ConceptNet Numberbatch, by
+Luminoso Technologies, Inc. You may redistribute or modify the data
+under the terms of the CC-BY-SA 4.0 license.
+
+Robyn Speer, Joshua Chin, and Catherine Havasi (2017). "ConceptNet 5.5:
+An Open Multilingual Graph of General Knowledge." In proceedings of AAAI 2017.
